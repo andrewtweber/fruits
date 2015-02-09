@@ -1,0 +1,13 @@
+Options -Indexes
+IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */_vti*
+
+ErrorDocument 404 /error.php?type=404
+ErrorDocument 403 /error.php?type=403
+
+RewriteEngine on
+
+RewriteRule ^(about|all)$ /$1.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ /index.php?var=$1 [L,QSA]
