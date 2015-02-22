@@ -20,11 +20,11 @@ $exec = $_db->query($sql);
 
 $fruits = $fruit_names = array();
 
-while( $fruit = $exec->fetch_assoc() ) {
+while ($fruit = $exec->fetch_assoc()) {
 	$fruits[] = $fruit;
 	$fruit_names[] = $fruit['plural_name'];
 	
-	if( count($_PAGE['og_image']) < 3 ) {
+	if (count($_PAGE['og_image']) < 3) {
 		$_PAGE['og_image'][] = 'http://' . $_CONFIG['domain'] . '/images/fruits/' . $fruit['plural_name'] . '.jpg';
 	}
 }

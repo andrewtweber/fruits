@@ -13,31 +13,29 @@ $errors = array();
 $template_paths = array();
 
 // Detect mobile device
-if( isset($_GET['mobile']) ) {
+if (isset($_GET['mobile'])) {
 	setcookie('no_mobile', '', time()-3600, '/', $_CONFIG['cookie_domain']);
 	setcookie('mobile', '1', 2145916800, '/', $_CONFIG['cookie_domain']);
-}
-else if( isset($_GET['no_mobile']) ) {
+} elseif (isset($_GET['no_mobile'])) {
 	setcookie('mobile', '', time()-3600, '/', $_CONFIG['cookie_domain']);
 	setcookie('no_mobile', '1', 2145916800, '/', $_CONFIG['cookie_domain']);
 }
 
 $is_mobile = is_mobile();
-if( $is_mobile ) {
+if ($is_mobile) {
 	$template_paths[] = ROOT . 'templates/mobile/';
 }
 $template_paths[] = ROOT . 'templates/';
 
 // Smaller/larger images
 $smaller = false;
-if( isset($_COOKIE['smaller']) ) {
+if (isset($_COOKIE['smaller'])) {
 	$smaller = true;
 }
-if( isset($_GET['smaller']) ) {
+if (isset($_GET['smaller'])) {
 	setcookie('smaller', '1', 2145916800, '/', $_CONFIG['cookie_domain']);
 	$smaller = true;
-}
-else if( isset($_GET['larger']) ) {
+} elseif (isset($_GET['larger'])) {
 	setcookie('smaller', '', time()-3600, '/', $_CONFIG['cookie_domain']);
 	$smaller = false;
 }

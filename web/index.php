@@ -11,7 +11,7 @@ $_PAGE = array(
 // Months
 
 $months = array();
-for( $i=1; $i<=12; $i++ ) {
+for ($i=1; $i<=12; $i++) {
 	$time = mktime(0, 0, 0, $i, 1);
 	$name = strtolower(date('F', $time));
 	
@@ -23,31 +23,29 @@ $m = date('n');
 //-----------------------------------------------------------------------------
 // Check if URL is for a month or a fruit
 
-if( isset($_GET['var']) ) {
+if (isset($_GET['var'])) {
 	$var = strtolower($_GET['var']);
 
-	if( isset($months[$var]) ) {
+	if (isset($months[$var])) {
 		$month = $var;
 		$m = $months[$month];
 		$_PAGE['title'] = 'What Fruits Are In Season In ' . ucwords($month) . '?';
-	}
-	else {
+	} else {
 		$sql = "SELECT *
 			FROM `fruits`
 			WHERE `name` = '" . $_db->escape($var) . "'
 				OR `plural_name` = '" . $_db->escape($var) . "'";
 		$exec = $_db->query($sql);
 
-		if( $exec->num_rows ) {
+		if ($exec->num_rows) {
 			$fruit = $exec->fetch_assoc();
 			
 			// Force the plural name
-			if( $var == $fruit['name'] && $fruit['name'] != $fruit['plural_name'] ) {
+			if ($var == $fruit['name'] && $fruit['name'] != $fruit['plural_name']) {
 				header("HTTP/1.1 301 Moved Permanently");
 				header("Location: /{$fruit['plural_name']}");
 				exit;
-			}
-			else {
+			} else {
 				$_PAGE['title'] = 'When Are ' . ucwords($fruit['plural_name']) . ' In Season?';
 				$_PAGE['url'] = $fruit['plural_name'];
 				$_PAGE['og_image'] = 'http://' . $_CONFIG['domain'] . '/images/fruits/' . $fruit['plural_name'] . '.jpg';
@@ -55,13 +53,11 @@ if( isset($_GET['var']) ) {
 				$fruit['start_time'] = mktime(0, 0, 0, $fruit['start_month'], 1);
 				$fruit['end_time']   = mktime(0, 0, 0, $fruit['end_month'], 1);
 				
-				if( $fruit['start_month'] == 1 && $fruit['end_month'] == 12 ) {
+				if ($fruit['start_month'] == 1 && $fruit['end_month'] == 12) {
 					$fruit['description'] = 'All Year';
-				}
-				else if( $fruit['start_month'] == $fruit['end_month'] ) {
+				} elseif ($fruit['start_month'] == $fruit['end_month']) {
 					$fruit['description'] = date('F', $fruit['start_time']);
-				}
-				else {
+				} else {
 					$fruit['description'] = date('F', $fruit['start_time']) . ' - ' . date('F', $fruit['end_time']);
 				}
 				
@@ -77,8 +73,7 @@ if( isset($_GET['var']) ) {
 				
 				exit;
 			}
-		}
-		else {
+		} else {
 			header("HTTP/1.0 404 Not Found");
 			require_once(ROOT . 'web/error.php');
 			exit;
@@ -102,11 +97,11 @@ $exec = $_db->query($sql);
 
 $fruits = $fruit_names = array();
 
-while( $fruit = $exec->fetch_assoc() ) {
+while ($fruit = $exec->fetch_assoc()) {
 	$fruits[] = $fruit;
 	$fruit_names[] = $fruit['plural_name'];
 	
-	if( count($_PAGE['og_image']) < 3 ) {
+	if (count($_PAGE['og_image']) < 3) {
 		$_PAGE['og_image'][] = 'http://' . $_CONFIG['domain'] . '/images/fruits/' . $fruit['plural_name'] . '.jpg';
 	}
 }

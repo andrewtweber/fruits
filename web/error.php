@@ -7,7 +7,9 @@ $_PAGE = array(
 );
 
 $type = (int)$_GET['type'];
-if( $type != 403 ) { $type = 404; }
+if ($type != 403) {
+	$type = 404;
+}
 
 $url = ltrim($_SERVER['REQUEST_URI'], '/');
 
@@ -22,11 +24,11 @@ $exec = $_db->query($sql);
 $fruit_names = array();
 $suggested = array();
 
-while( $fruit = $exec->fetch_assoc() ) {
+while ($fruit = $exec->fetch_assoc()) {
 	$fruit_names[] = $fruit['plural_name'];
 	
 	$lev = levenshtein($fruit['plural_name'], $url);
-	if( $lev <= 2 ) {
+	if ($lev <= 2) {
 		$suggested[] = $fruit['plural_name'];
 	}
 }

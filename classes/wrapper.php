@@ -8,6 +8,9 @@
  */
 class Wrapper
 {
+	/**
+	 * @var mysqli_extended
+	 */
 	protected $mysqli;
 
 	public function __construct(mysqli_extended $mysqli) {
@@ -18,17 +21,18 @@ class Wrapper
 	 * Catch ALL methods and create a connection before invoking the method on
 	 * the mysqli object
 	 * 
-	 * @param string $method the name of the method
-	 * @param array $args the list of arguments
-	 * @return mixed whatever the $method function returns
+	 * @param  string $method  the name of the method
+	 * @param  array  $args the list of arguments
+	 * @return mixed  whatever the $method function returns
 	 */
 	public function __call($method, $args)
 	{
 		// Alias methods
-		if( $method == 'escape' ) { $method = 'real_escape_string'; }
+		if ($method == 'escape') {
+			$method = 'real_escape_string';
+		}
 		
-		switch( $method )
-		{			
+		switch ($method) {			
 			// Create a connection for these methods
 			case 'query':
 			case 'real_escape_string':
@@ -41,23 +45,28 @@ class Wrapper
 				break;
 		}
 
-		if( defined('DEBUG') ) {
+		if (defined('DEBUG')) {
 			echo "Running method {$method}<br>";
-			if( $method == 'query' ) { var_dump($args[0]); }
+			if ($method == 'query') {
+				var_dump($args[0]);
+			}
 		}
 
 		return call_user_func_array(array($this->mysqli, $method), $args);
 	}
 
-	final public function __set( $name, $value ) {
+	final public function __set($name, $value) {
 		$this->mysqli->$name = $value;
 	}
-	final public function __get( $name ) {
+
+	final public function __get($name) {
 		return $this->mysqli->$name;
     }
-	final public function __isset( $name ) {
+
+	final public function __isset($name) {
 		return isset($this->mysqli->$name);
 	}
+
 }
 
 /**
@@ -70,16 +79,43 @@ class Wrapper
  */
 class mysqli_extended extends mysqli
 {
-	protected $_connection = null;
-	
-	protected $_dbhost, $_dbuser, $_dbpass, $_dbname;
+	/**
+	 * @var mysqli
+	 */
+	protected $connection = null;
 
-	public function __construct($DBHOST, $DBUSER, $DBPASS, $DBNAME)
+	/**
+	 * @var string
+	 */
+	protected $host;
+
+	/**
+	 * @var string
+	 */
+	protected $user;
+
+	/**
+	 * @var string
+	 */
+	protected $password;
+
+	/**
+	 * @var string
+	 */
+	protected $database;
+
+	/**
+	 * @param  string  $host
+	 * @param  string  $user
+	 * @param  string  $password
+	 * @param  string  $database
+	 */
+	public function __construct($host, $user, $password, $database)
 	{
-		$this->_dbhost = $DBHOST;
-		$this->_dbuser = $DBUSER;
-		$this->_dbpass = $DBPASS;
-		$this->_dbname = $DBNAME;
+		$this->host = $host;
+		$this->user = $user;
+		$this->password = $password;
+		$this->database = $database;
 	}
 
 	/**
@@ -87,14 +123,15 @@ class mysqli_extended extends mysqli
 	 */
 	public function connect()
 	{
-		if( $this->_connection === null )
-		{	
-			$this->_connection = true;
-			parent::__construct($this->_dbhost, $this->_dbuser, $this->_dbpass, $this->_dbname);
+		if ($this->connection === null) {
+			$this->connection = true;
+			parent::__construct($this->host, $this->user, $this->password, $this->database);
 
-			if( defined('DEBUG')) {
-				echo 'Connection created';
+			if (defined('DEBUG')) {
+				echo "Connection created";
 			}
 		}
 	}
+
 }
+

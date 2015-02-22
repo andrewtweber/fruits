@@ -1,7 +1,7 @@
 <?php
 function is_local() {
 	global $_CONFIG;
-	return( $_CONFIG['type'] == 'local' );
+	return($_CONFIG['type'] == 'local');
 }
 
 /**
@@ -12,12 +12,18 @@ function is_mobile()
 	$useragent = $_SERVER['HTTP_USER_AGENT'];
 	
 	// Manual overrides
-	if( isset($_GET['mobile']) ) { return true; }
-	if( isset($_GET['no_mobile']) ) { return false; }
-	if( isset($_COOKIE['mobile']) ) { return true; }
-	if( isset($_COOKIE['no_mobile']) ) { return false; }
+	if (isset($_GET['mobile'])) {
+		return true;
+	} elseif (isset($_GET['no_mobile'])) {
+		return false;
+	} elseif (isset($_COOKIE['mobile'])) {
+		return true;
+	} elseif (isset($_COOKIE['no_mobile'])) {
+		return false;
+	}
+
 	// Don't count iPad
-	if( (bool)strpos($useragent,'iPad') ) {
+	if ((bool)strpos($useragent,'iPad')) {
 		return false;
 	}
 	
@@ -34,14 +40,14 @@ function is_mobile()
  * @param  $message  string HTML formatted message
  * @param  $attachments  array of full paths to attachment files (including ROOT)
  */
-function send_email( $to, $subject, $message, $from = null, $attachments = array() )
+function send_email($to, $subject, $message, $from = null, $attachments = array())
 {
 	global $_CONFIG;
 
 	$mail = new PHPMailer(true);
 	$mail->IsSMTP();
 	
-	if( !is_array($to) ) {
+	if ( ! is_array($to)) {
 		$to = array($to);
 	}
 
@@ -54,13 +60,13 @@ function send_email( $to, $subject, $message, $from = null, $attachments = array
 		$mail->Username   = $_CONFIG['system_email'];
 		$mail->Password   = $_CONFIG['system_email_password'];
 		
-		foreach( $to as $to_email ) {
+		foreach ($to as $to_email) {
 			$mail->AddAddress($to_email);
 		}
 
 		$mail->SetFrom($_CONFIG['system_email'], 'Castleton Lawn Care');
 		$mail->ClearReplyTos();
-		if( $from ) {
+		if ($from) {
 			$mail->AddReplyTo($from);
 		} else {
 			$mail->AddReplyTo($_CONFIG['system_email'], 'Castleton Lawn Care');
@@ -68,16 +74,15 @@ function send_email( $to, $subject, $message, $from = null, $attachments = array
 		$mail->Subject = $subject;
 		$mail->MsgHTML($message);
 		
-		foreach( $attachments as $attachment ) {
+		foreach ($attachments as $attachment) {
 			$mail->AddAttachment($attachment);
 		}
 
 		$mail->Send();
-	}
-	catch( phpmailerException $e ) {
+	} catch (phpmailerException $e) {
 		throw new Exception($e->errorMessage());
-	}
-	catch( Exception $e ) {
+	} catch (Exception $e) {
 		throw new Exception($e->getMessage());
 	}
 }
+
