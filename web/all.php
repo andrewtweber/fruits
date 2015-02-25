@@ -1,6 +1,5 @@
 <?php
 require_once(__DIR__ . '/../include/connect.php');
-require_once(ROOT . 'libraries/phpmailer/class.phpmailer.php');
 
 $_PAGE = array(
 	'id' => 'all',
