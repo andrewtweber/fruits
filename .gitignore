@@ -1,1 +1,3 @@
-libraries
+.sass-cache
+composer.lock
+vendor

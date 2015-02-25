@@ -1,8 +1,6 @@
 <?php
 require_once(__DIR__ . '/config.inc.php');
-
-require_once(ROOT . 'libraries/Smarty-3.1.8/libs/Smarty.class.php');
-require_once(ROOT . 'libraries/phpmailer/class.phpmailer.php');
+require_once(__DIR__ . '/../vendor/autoload.php');
 
 require_once(ROOT . 'include/db.php');
 require_once(ROOT . 'include/functions.php');
@@ -53,3 +51,4 @@ $ip = $_SERVER['REMOTE_ADDR'];
 $Smarty->assign('is_mobile', $is_mobile);
 $Smarty->assign('smaller', $smaller);
 $Smarty->assign('_CONFIG', $_CONFIG);
+

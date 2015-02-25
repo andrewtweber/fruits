@@ -1,0 +1,7 @@
+{
+	"require": {
+		"smarty/smarty": "3.*",
+		"phpmailer/phpmailer": "5.*"
+	},
+	"minimum-stability": "stable"
+}
