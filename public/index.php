@@ -74,7 +74,7 @@ if (isset($_GET['var'])) {
 			}
 		} else {
 			header("HTTP/1.0 404 Not Found");
-			require_once(ROOT . 'web/error.php');
+			require_once(ROOT . 'public/error.php');
 			exit;
 		}
 	}

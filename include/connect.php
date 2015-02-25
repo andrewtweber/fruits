@@ -21,9 +21,9 @@ if (isset($_GET['mobile'])) {
 
 $is_mobile = is_mobile();
 if ($is_mobile) {
-	$template_paths[] = ROOT . 'templates/mobile/';
+	$template_paths[] = ROOT . 'views/mobile/';
 }
-$template_paths[] = ROOT . 'templates/';
+$template_paths[] = ROOT . 'views/';
 
 // Smaller/larger images
 $smaller = false;
@@ -42,7 +42,7 @@ if (isset($_GET['smaller'])) {
 $Smarty = new Smarty();
 $Smarty->setCompileCheck(true);
 $Smarty->debugging		= false;
-$Smarty->compile_dir	= ROOT . 'templates/compiled/';
+$Smarty->compile_dir	= ROOT . 'views/compiled/';
 $Smarty->template_dir	= $template_paths;
 
 // Global variables
