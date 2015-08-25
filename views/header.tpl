@@ -10,15 +10,15 @@
 {/if}
 
 	<meta name="AUTHOR" content="Andrew Weber">
-	<meta name="COPYRIGHT" content="Copyright (c) {date('Y')} {$_CONFIG['site_name']}">
+	<meta name="COPYRIGHT" content="Copyright (c) {date('Y')} {env('SITE_NAME')}">
 {if $_PAGE['description']}
 	<meta name="DESCRIPTION" content="{htmlspecialchars($_PAGE['description'])}">
 {/if}
 
 {if $_PAGE['id'] != 'error'}
 	<meta property="og:title" content="{htmlspecialchars($_PAGE['title'])}" />
-	<meta property="og:site_name" content="{$_CONFIG['site_name']}" />
-	<meta property="og:url" content="http://{$_CONFIG['domain']}/{$_PAGE['url']}" />
+	<meta property="og:site_name" content="{env('SITE_NAME')}" />
+	<meta property="og:url" content="http://{env('DOMAIN')}/{$_PAGE['url']}" />
 	<meta property="og:type" content="article" />
 {foreach $_PAGE['og_image'] as $og_image}
 	<meta property="og:image" content="{$og_image}" />
@@ -27,18 +27,14 @@
 	<meta property="fb:admins" content="5611183" />
 
 {/if}
-{if is_local()}
-	<link rel="stylesheet/less" type="text/css" href="/css/style.less?v={$versions['css']}">
-{else}
 	<link rel="stylesheet" type="text/css" href="/css/style.css?v={$versions['css']}">
-{/if}
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
 {if $_PAGE['id'] != 'error'}
-	<link rel="canonical" href="http://{$_CONFIG['domain']}/{$_PAGE['url']}" />
+	<link rel="canonical" href="http://{env('DOMAIN')}/{$_PAGE['url']}" />
 {/if}
 	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="apple-touch-icon-precomposed" href="/images/touchicon.png">

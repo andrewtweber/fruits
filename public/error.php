@@ -33,11 +33,11 @@ while ($fruit = $exec->fetch_assoc()) {
 	}
 }
 
-require_once(ROOT . 'header.php');
+require_once(__DIR__ . '/../header.php');
 
 $Smarty->assign('type', $type);
 $Smarty->assign('suggested', $suggested);
 
 $Smarty->display('error.tpl');
 
-require_once(ROOT . 'footer.php');
+require_once(__DIR__ . '/../footer.php');

@@ -15,9 +15,5 @@ Add it to your Home screen!<br>
 
 </footer>
 
-{if is_local()}
-<script type="text/javascript" src="/js/less-1.3.0.min.js"></script>
-{/if}
-
 </body>
 </html>

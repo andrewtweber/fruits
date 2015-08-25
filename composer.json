@@ -1,7 +1,8 @@
 {
 	"require": {
 		"smarty/smarty": "3.*",
-		"phpmailer/phpmailer": "5.*"
+		"phpmailer/phpmailer": "5.*",
+		"vlucas/phpdotenv": "^2.0"
 	},
 	"minimum-stability": "stable"
 }

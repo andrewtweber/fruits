@@ -1,7 +1,6 @@
 <?php
-function is_local() {
-	global $_CONFIG;
-	return($_CONFIG['type'] == 'local');
+function env($val) {
+    return getenv($val);
 }
 
 /**
@@ -38,12 +37,10 @@ function is_mobile()
  * @param  $to  string or array of email addresses
  * @param  $subject  string subject
  * @param  $message  string HTML formatted message
- * @param  $attachments  array of full paths to attachment files (including ROOT)
+ * @param  $attachments  array of full paths to attachment files
  */
 function send_email($to, $subject, $message, $from = null, $attachments = array())
 {
-	global $_CONFIG;
-
 	$mail = new PHPMailer(true);
 	$mail->IsSMTP();
 	
@@ -57,19 +54,19 @@ function send_email($to, $subject, $message, $from = null, $attachments = array(
 		$mail->SMTPSecure = 'ssl';
 		$mail->Host       = 'smtp.gmail.com';
 		$mail->Port       = 465;
-		$mail->Username   = $_CONFIG['system_email'];
-		$mail->Password   = $_CONFIG['system_email_password'];
+		$mail->Username   = env('MAIL_USER'); 
+		$mail->Password   = env('MAIL_PASSWORD');
 		
 		foreach ($to as $to_email) {
 			$mail->AddAddress($to_email);
 		}
 
-		$mail->SetFrom($_CONFIG['system_email'], $_CONFIG['site_name']);
+		$mail->SetFrom(env('MAIL_USER'), env('SITE_NAME'));
 		$mail->ClearReplyTos();
 		if ($from) {
 			$mail->AddReplyTo($from);
 		} else {
-			$mail->AddReplyTo($_CONFIG['system_email'], $_CONFIG['site_name']);
+			$mail->AddReplyTo(env('MAIL_USER'), env('SITE_NAME'));
 		}
 		$mail->Subject = $subject;
 		$mail->MsgHTML($message);

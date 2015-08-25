@@ -24,14 +24,14 @@ while ($fruit = $exec->fetch_assoc()) {
 	$fruit_names[] = $fruit['plural_name'];
 	
 	if (count($_PAGE['og_image']) < 3) {
-		$_PAGE['og_image'][] = 'http://' . $_CONFIG['domain'] . '/images/fruits/' . $fruit['plural_name'] . '.jpg';
+		$_PAGE['og_image'][] = 'http://' . env('DOMAIN') . '/images/fruits/' . $fruit['plural_name'] . '.jpg';
 	}
 }
 
 $Smarty->assign('fruits', $fruits);
 
-require_once(ROOT . 'header.php');
+require_once(__DIR__ . '/../header.php');
 
 $Smarty->display('index.tpl');
 
-require_once(ROOT . 'footer.php');
+require_once(__DIR__ . '/../footer.php');

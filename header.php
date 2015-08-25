@@ -1,6 +1,6 @@
 <?php
 if ( ! $_PAGE['title']) {
-	$_PAGE['title'] = $_CONFIG['site_name'];
+	$_PAGE['title'] = env('SITE_NAME');
 }
 
 if ( ! isset($_PAGE['og_image'])) {
@@ -9,7 +9,7 @@ if ( ! isset($_PAGE['og_image'])) {
 	$_PAGE['og_image'] = array($_PAGE['og_image']);
 }
 
-$_PAGE['og_image'][] = 'http://' . $_CONFIG['domain'] . '/images/facebook.jpg';
+$_PAGE['og_image'][] = 'http://' . env('DOMAIN') . '/images/facebook.jpg';
 
 $Smarty->assign('_PAGE', $_PAGE);
 $Smarty->assign('versions', $versions);

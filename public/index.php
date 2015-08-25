@@ -47,7 +47,7 @@ if (isset($_GET['var'])) {
 			} else {
 				$_PAGE['title'] = 'When Are ' . ucwords($fruit['plural_name']) . ' In Season?';
 				$_PAGE['url'] = $fruit['plural_name'];
-				$_PAGE['og_image'] = 'http://' . $_CONFIG['domain'] . '/images/fruits/' . $fruit['plural_name'] . '.jpg';
+				$_PAGE['og_image'] = 'http://' . env('DOMAIN') . '/images/fruits/' . $fruit['plural_name'] . '.jpg';
 				
 				$fruit['start_time'] = mktime(0, 0, 0, $fruit['start_month'], 1);
 				$fruit['end_time']   = mktime(0, 0, 0, $fruit['end_month'], 1);
@@ -64,17 +64,17 @@ if (isset($_GET['var'])) {
 			
 				$Smarty->assign('fruit', $fruit);
 				
-				require_once(ROOT . 'header.php');
+				require_once(__DIR__ . '/../header.php');
 
 				$Smarty->display('fruit.tpl');
 
-				require_once(ROOT . 'footer.php');
+				require_once(__DIR__ . '/../footer.php');
 				
 				exit;
 			}
 		} else {
 			header("HTTP/1.0 404 Not Found");
-			require_once(ROOT . 'public/error.php');
+			require_once(__DIR__ . '/error.php');
 			exit;
 		}
 	}
@@ -101,7 +101,7 @@ while ($fruit = $exec->fetch_assoc()) {
 	$fruit_names[] = $fruit['plural_name'];
 	
 	if (count($_PAGE['og_image']) < 3) {
-		$_PAGE['og_image'][] = 'http://' . $_CONFIG['domain'] . '/images/fruits/' . $fruit['plural_name'] . '.jpg';
+		$_PAGE['og_image'][] = 'http://' . env('DOMAIN') . '/images/fruits/' . $fruit['plural_name'] . '.jpg';
 	}
 }
 
@@ -114,8 +114,8 @@ $Smarty->assign('next', $next);
 
 $Smarty->assign('fruits', $fruits);
 
-require_once(ROOT . 'header.php');
+require_once(__DIR__ . '/../header.php');
 
 $Smarty->display('index.tpl');
 
-require_once(ROOT . 'footer.php');
+require_once(__DIR__ . '/../footer.php');
