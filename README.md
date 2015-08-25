@@ -12,6 +12,6 @@ After cloning the repository, run
 
     $ composer update
 
-Then copy the file `include/config.inc.sample.php` to `include/config.inc.php` and update your database connection and other settings.
+Then copy the file `.env.example` to `.env` and update your database connection and other settings.
 
 Finally, make sure that the folder `views/compiled` is writable by your web server.
