@@ -10,7 +10,8 @@ Old project with some modern updates (composer packages, SASS)
 
 After cloning the repository, run
 
-    $ composer update
+    $ composer install
+    $ compass compile
 
 Then copy the file `.env.example` to `.env` and update your database connection and other settings.
 
