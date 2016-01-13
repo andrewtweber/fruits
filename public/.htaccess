@@ -6,8 +6,9 @@ ErrorDocument 403 /error.php?type=403
 
 RewriteEngine on
 
-RewriteRule ^(about|all)$ /$1.php [L,QSA]
+RewriteRule ^(about|all|info)$ /$1.php [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ /index.php?var=$1 [L,QSA]
+
