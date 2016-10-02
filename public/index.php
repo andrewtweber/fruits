@@ -32,8 +32,8 @@ if (isset($_GET['var'])) {
 	} else {
 		$sql = "SELECT *
 			FROM `fruits`
-			WHERE `name` = '" . $_db->escape($var) . "'
-				OR `plural_name` = '" . $_db->escape($var) . "'";
+			WHERE `name` = '" . $_db->escape(str_replace('-', ' ', $var)) . "'
+				OR `plural_name` = '" . $_db->escape(str_replace('-', ' ', $var)) . "'";
 		$exec = $_db->query($sql);
 
 		if ($exec->num_rows) {
@@ -45,9 +45,12 @@ if (isset($_GET['var'])) {
 				header("Location: /{$fruit['plural_name']}");
 				exit;
 			} else {
-				$_PAGE['title'] = 'When Are ' . ucwords($fruit['plural_name']) . ' In Season?';
-				$_PAGE['url'] = $fruit['plural_name'];
-				$_PAGE['og_image'] = 'http://' . env('DOMAIN') . '/images/fruits/' . $fruit['plural_name'] . '.jpg';
+                $fruit['url'] = str_replace(' ', '-', $fruit['plural_name']);
+                $verb = ($fruit['name'] == $fruit['plural_name']) ? 'is' : 'are';
+
+				$_PAGE['title'] = 'When ' . ucwords($verb) . ' ' . ucwords($fruit['plural_name']) . ' In Season?';
+				$_PAGE['url'] = $fruit['url'];
+				$_PAGE['og_image'] = 'http://' . env('DOMAIN') . '/images/fruits/' . $fruit['url'] . '.jpg';
 				
 				$fruit['start_time'] = mktime(0, 0, 0, $fruit['start_month'], 1);
 				$fruit['end_time']   = mktime(0, 0, 0, $fruit['end_month'], 1);
@@ -60,7 +63,7 @@ if (isset($_GET['var'])) {
 					$fruit['description'] = date('F', $fruit['start_time']) . ' - ' . date('F', $fruit['end_time']);
 				}
 				
-				$_PAGE['description'] = 'When are ' . $fruit['plural_name'] . ' in season? ' . $fruit['description'];
+				$_PAGE['description'] = 'When ' . $verb . ' ' . $fruit['plural_name'] . ' in season? ' . $fruit['description'];
 			
 				$Smarty->assign('fruit', $fruit);
 				
@@ -89,14 +92,16 @@ $_PAGE['url'] = $month;
 
 $sql = "SELECT *
 	FROM `fruits`
-	WHERE ( {$m} >= `start_month` AND {$m} <= `end_month` )
-		OR ( `start_month` > `end_month` AND ( {$m} >= `start_month` OR {$m} <= `end_month` ) )
+	WHERE (( {$m} >= `start_month` AND {$m} <= `end_month` )
+		OR ( `start_month` > `end_month` AND ( {$m} >= `start_month` OR {$m} <= `end_month` ) ))
+       AND `easter_egg` = 0
 	ORDER BY `name` ASC";
 $exec = $_db->query($sql);
 
 $fruits = $fruit_names = array();
 
 while ($fruit = $exec->fetch_assoc()) {
+    $fruit['url'] = str_replace(' ', '-', $fruit['plural_name']);
 	$fruits[] = $fruit;
 	$fruit_names[] = $fruit['plural_name'];
 	

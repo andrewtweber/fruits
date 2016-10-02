@@ -14,12 +14,14 @@ $_PAGE = array(
 
 $sql = "SELECT *
 	FROM `fruits`
+    WHERE `easter_egg` = 0
 	ORDER BY `name` ASC";
 $exec = $_db->query($sql);
 
 $fruits = $fruit_names = array();
 
 while ($fruit = $exec->fetch_assoc()) {
+    $fruit['url'] = str_replace(' ', '-', $fruit['plural_name']);
 	$fruits[] = $fruit;
 	$fruit_names[] = $fruit['plural_name'];
 	
