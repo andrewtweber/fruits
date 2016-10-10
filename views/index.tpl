@@ -10,7 +10,7 @@
 
 {foreach $fruits as $fruit}
 <a class="{if $smaller}small {/if}fruit" href="/{$fruit['url']}">
-	<img src="/images/fruits/{if $smaller}small/{/if}{$fruit['plural_name']}.{if $smaller}png{else}jpg{/if}" width="320" height="320" alt="{$fruit['plural_name']}">
+	<img src="/images/fruits/{if $smaller}small/{/if}{$fruit['url']}.{if $smaller}png{else}jpg{/if}" width="320" height="320" alt="{$fruit['plural_name']}">
 
 	<span>{$fruit['plural_name']}</span>
 </a>
