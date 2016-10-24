@@ -32,9 +32,12 @@ if (isset($_GET['var'])) {
 	} else {
 		$sql = "SELECT *
 			FROM `fruits`
-			WHERE `name` = '" . $_db->escape(str_replace('-', ' ', $var)) . "'
-				OR `plural_name` = '" . $_db->escape(str_replace('-', ' ', $var)) . "'";
-		$exec = $_db->query($sql);
+			WHERE `name` = ?
+                OR `plural_name` = ?";
+		$stmt = $_db->prepare($sql);
+        $stmt->bind_param('ss', str_replace('-', ' ', $var), str_replace('-', ' ', $var));
+        $stmt->execute();
+        $exec = $stmt->get_result();
 
 		if ($exec->num_rows) {
 			$fruit = $exec->fetch_assoc();

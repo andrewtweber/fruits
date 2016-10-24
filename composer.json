@@ -1,4 +1,7 @@
 {
+    "name": "What Fruits are in Season?",
+    "description": "Helps you shop for fruits at the grocery store",
+    "license": "MIT",
 	"require": {
 		"smarty/smarty": "3.*",
 		"vlucas/phpdotenv": "^2.0"

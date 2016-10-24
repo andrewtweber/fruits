@@ -34,6 +34,7 @@ class Wrapper
 		
 		switch ($method) {			
 			// Create a connection for these methods
+            case 'prepare':
 			case 'query':
 			case 'real_escape_string':
 			case 'select_db':
@@ -45,12 +46,12 @@ class Wrapper
 				break;
 		}
 
-		if (defined('DEBUG')) {
-			echo "Running method {$method}<br>";
-			if ($method == 'query') {
-				var_dump($args[0]);
-			}
-		}
+		//if (defined('DEBUG')) {
+		//	echo "Running method {$method}<br>";
+		//	if ($method == 'query') {
+		//		var_dump($args[0]);
+		//	}
+		//}
 
 		return call_user_func_array(array($this->mysqli, $method), $args);
 	}
