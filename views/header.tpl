@@ -10,15 +10,15 @@
 {/if}
 
 	<meta name="AUTHOR" content="Andrew Weber">
-	<meta name="COPYRIGHT" content="Copyright (c) {date('Y')} {env('SITE_NAME')}">
+	<meta name="COPYRIGHT" content="Copyright (c) {date('Y')} {getenv('SITE_NAME')}">
 {if $_PAGE['description']}
 	<meta name="DESCRIPTION" content="{htmlspecialchars($_PAGE['description'])}">
 {/if}
 
 {if $_PAGE['id'] != 'error'}
 	<meta property="og:title" content="{htmlspecialchars($_PAGE['title'])}" />
-	<meta property="og:site_name" content="{env('SITE_NAME')}" />
-	<meta property="og:url" content="http://{env('DOMAIN')}/{$_PAGE['url']}" />
+	<meta property="og:site_name" content="{getenv('SITE_NAME')}" />
+	<meta property="og:url" content="http://{getenv('DOMAIN')}/{$_PAGE['url']}" />
 	<meta property="og:type" content="article" />
 {foreach $_PAGE['og_image'] as $og_image}
 	<meta property="og:image" content="{$og_image}" />
@@ -34,7 +34,7 @@
 	<![endif]-->
 
 {if $_PAGE['id'] != 'error'}
-	<link rel="canonical" href="http://{env('DOMAIN')}/{$_PAGE['url']}" />
+	<link rel="canonical" href="http://{getenv('DOMAIN')}/{$_PAGE['url']}" />
 {/if}
 	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="apple-touch-icon-precomposed" href="/images/touchicon.png">

@@ -1,5 +1,5 @@
 {
-    "name": "What Fruits are in Season?",
+    "name": "andrewtweber/fruits",
     "description": "Helps you shop for fruits at the grocery store",
     "license": "MIT",
 	"require": {
