@@ -1,9 +1,17 @@
 <?php namespace Fruits\Controllers;
 
+use function Fruits\base_path;
+use Fruits\Connection;
+use Fruits\Wrapper;
 use Jenssegers\Blade\Blade;
 
 abstract class Controller
 {
+    /**
+     * @var Wrapper
+     */
+    protected $db;
+
     public function __construct()
     {
         // Detect mobile device
@@ -14,6 +22,8 @@ abstract class Controller
             setcookie('mobile', '', time() - 3600, '/', getenv('COOKIE_DOMAIN'));
             setcookie('no_mobile', '1', 2145916800, '/', getenv('COOKIE_DOMAIN'));
         }
+
+        $this->db = new Wrapper(new Connection(getenv('DBHOST'), getenv('DBUSER'), getenv('DBPASS'), getenv('DBNAME')));
     }
 
     /**
@@ -23,7 +33,7 @@ abstract class Controller
      */
     public function view($path)
     {
-        $blade = new Blade([__DIR__ . '/../resources/views'], __DIR__ . '/../storage/cache');
+        $blade = new Blade([base_path() . '/resources/views'], base_path(). '/storage/cache');
 
         $is_mobile = \Fruits\is_mobile();
 
@@ -43,5 +53,13 @@ abstract class Controller
         return $blade->make($path)
             ->with('is_mobile', $is_mobile)
             ->with('smaller', $smaller);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function error($path)
+    {
+        return $this->view('error');
     }
 }

@@ -4,11 +4,26 @@ IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */_vti*
 ErrorDocument 404 /error.php?type=404
 ErrorDocument 403 /error.php?type=403
 
-RewriteEngine on
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
 
-RewriteRule ^(about|all|info)$ /$1.php [L,QSA]
+    RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ /index.php?var=$1 [L,QSA]
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    #Otherwise ajax fails because of trailing slashes
+    RewriteCond %{REQUEST_METHOD} GET
+    RewriteRule ^ %1 [L,R=301]
 
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>

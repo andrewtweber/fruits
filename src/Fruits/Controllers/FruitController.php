@@ -1,14 +1,14 @@
 <?php namespace Fruits\Controllers;
 
-use Fruits\Connection;
-use Fruits\Wrapper;
-
 class FruitController extends Controller
 {
+    /**
+     * All fruits
+     *
+     * @return mixed
+     */
     public function all()
     {
-        $_db = new Wrapper(new Connection(getenv('DBHOST'), getenv('DBUSER'), getenv('DBPASS'), getenv('DBNAME')));
-
         $_PAGE = [
             'id'          => 'all',
             'title'       => 'When Are Fruits In Season?',
@@ -24,7 +24,7 @@ class FruitController extends Controller
             FROM `fruits`
             WHERE `easter_egg` = 0
             ORDER BY `name` ASC";
-        $exec = $_db->query($sql);
+        $exec = $this->db->query($sql);
 
         $fruits = $fruit_names = [];
 
@@ -43,15 +43,90 @@ class FruitController extends Controller
             ->with('fruits', $fruits);
     }
 
+    /**
+     * Given month
+     *
+     * @return mixed
+     */
+    public function month($month)
+    {
+        $_PAGE = [
+            'title'    => 'What Fruits Are In Season Now?',
+            'og_image' => [],
+        ];
+
+        //-----------------------------------------------------------------------------
+        // Months
+
+        $months = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $time = mktime(0, 0, 0, $i, 1);
+            $name = strtolower(date('F', $time));
+
+            $months[$name] = $i;
+        }
+        $month = strtolower(date('F'));
+        $m     = date('n');
+
+        //-----------------------------------------------------------------------------
+        // Check if URL is for a month or a fruit
+
+        if (isset($_GET['var'])) {
+            $var = strtolower($_GET['var']);
+
+            if (isset($months[$var])) {
+                $month          = $var;
+                $m              = $months[$month];
+                $_PAGE['title'] = 'What Fruits Are In Season In ' . ucwords($month) . '?';
+            }
+        }
+
+        $prev         = strtolower(date('F', mktime(0, 0, 0, $m - 1, 1)));
+        $next         = strtolower(date('F', mktime(0, 0, 0, $m + 1, 1)));
+        $_PAGE['url'] = $month;
+
+        //-----------------------------------------------------------------------------
+        // Fruits
+
+        $sql  = "SELECT *
+            FROM `fruits`
+            WHERE (( {$m} >= `start_month` AND {$m} <= `end_month` )
+                OR ( `start_month` > `end_month` AND ( {$m} >= `start_month` OR {$m} <= `end_month` ) ))
+               AND `easter_egg` = 0
+            ORDER BY `name` ASC";
+        $exec = $this->db->query($sql);
+
+        $fruits = $fruit_names = [];
+
+        while ($fruit = $exec->fetch_assoc()) {
+            $fruit['url']  = str_replace(' ', '-', $fruit['plural_name']);
+            $fruits[]      = $fruit;
+            $fruit_names[] = $fruit['plural_name'];
+
+            if (count($_PAGE['og_image']) < 3) {
+                $_PAGE['og_image'][] = 'http://' . getenv('DOMAIN') . '/images/fruits/' . $fruit['plural_name'] . '.jpg';
+            }
+        }
+
+        $_PAGE['description'] = 'What fruits are in season in ' . ucwords($month) . '? ' . ucfirst(implode(', ',
+                $fruit_names));
+
+        return $this->view('index')
+            ->with('_PAGE', $_PAGE)
+            ->with('month', $month)
+            ->with('m', $m)
+            ->with('prev', $prev)
+            ->with('next', $next)
+            ->with('fruits', $fruits);
+    }
+
     public function show($name)
     {
-        $_db = new Wrapper(new Connection(getenv('DBHOST'), getenv('DBUSER'), getenv('DBPASS'), getenv('DBNAME')));
-
         $sql  = "SELECT *
             FROM `fruits`
             WHERE `name` = ?
                 OR `plural_name` = ?";
-        $stmt = $_db->prepare($sql);
+        $stmt = $this->db->prepare($sql);
         $stmt->bind_param('ss', str_replace('-', ' ', $name), str_replace('-', ' ', $name));
         $stmt->execute();
         $exec = $stmt->get_result();
@@ -60,7 +135,7 @@ class FruitController extends Controller
             $fruit = $exec->fetch_assoc();
 
             // Force the plural name
-            if ($var == $fruit['name'] && $fruit['name'] != $fruit['plural_name']) {
+            if ($name == $fruit['name'] && $fruit['name'] != $fruit['plural_name']) {
                 header("HTTP/1.1 301 Moved Permanently");
                 header("Location: /{$fruit['plural_name']}");
                 exit;
@@ -90,9 +165,7 @@ class FruitController extends Controller
                     ->with('fruit', $fruit);
             }
         } else {
-            header("HTTP/1.0 404 Not Found");
-            require_once(__DIR__ . '/error.php');
-            exit;
+            return $this->error($name);
         }
     }
 }

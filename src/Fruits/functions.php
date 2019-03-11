@@ -1,5 +1,10 @@
 <?php namespace Fruits;
 
+function base_path()
+{
+    return $_SERVER['DOCUMENT_ROOT'] . '/../';
+}
+
 /**
  * Check if user has mobile enabled/disabled; default to detecting user agent
  */
