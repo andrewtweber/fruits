@@ -10,9 +10,14 @@ Old project with some modern updates (composer packages, SASS)
 
 After cloning the repository, run
 
-    $ composer install
-    $ compass compile
+```
+composer install
+yarn install
+yarn run production
+```
 
-Then copy the file `.env.example` to `.env` and update your database connection and other settings.
+Copy the file `.env.example` to `.env` and update your database connection and other settings.
+
+Run the SQL query in `database/structure.sql` and populate the table with data.
 
 Finally, make sure that the folder `views/compiled` is writable by your web server.

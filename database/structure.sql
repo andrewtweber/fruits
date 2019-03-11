@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS `fruits`
+(
+  `id` INT(10) UNSIGNED AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `plural_name` VARCHAR(255) NOT NULL,
+  `start_month` INT(2) NOT NULL,
+  `end_month` INT(2) NOT NULL,
+  `easter_egg` TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB;
