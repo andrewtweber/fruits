@@ -2,11 +2,19 @@
     "name": "andrewtweber/fruits",
     "description": "Helps you shop for fruits at the grocery store",
     "license": "MIT",
-	"require": {
-		"smarty/smarty": "3.*",
-		"vlucas/phpdotenv": "^2.0",
+    "require": {
+        "smarty/smarty": "3.*",
+        "vlucas/phpdotenv": "^2.0",
         "nikic/fast-route": "^1.3",
         "jenssegers/blade": "^1.1"
-	},
-	"minimum-stability": "stable"
+    },
+    "autoload": {
+        "files": [
+            "src/Fruits/functions.php"
+        ],
+        "psr-4": {
+            "Fruits\\": "src/Fruits/"
+        }
+    },
+    "minimum-stability": "stable"
 }
