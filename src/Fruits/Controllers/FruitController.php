@@ -58,6 +58,10 @@ class FruitController extends Controller
         //-----------------------------------------------------------------------------
         // Months
 
+        $months = array_map(function ($m) {
+            return strtolower(date('F', mktime(0, 0, 0, $m)));
+        }, range(1, 12));
+
         $months = [];
         for ($i = 1; $i <= 12; $i++) {
             $time = mktime(0, 0, 0, $i, 1);

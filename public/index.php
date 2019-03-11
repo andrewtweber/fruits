@@ -15,7 +15,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
         return (new \Fruits\Controllers\FruitController())->all();
     });
 
-    $r->get('/{month:\d+}', function () {
+    $r->get('/{month:(' . implode('|', $months) . ')}', function () {
         return (new \Fruits\Controllers\FruitController())->month();
     });
 });
