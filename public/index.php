@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+
 require_once(__DIR__ . '/../vendor/autoload.php');
 
 $dotenv = new Dotenv\Dotenv(__DIR__ . '/../');
@@ -6,18 +8,13 @@ $dotenv->load();
 
 session_start();
 
-$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-    $r->get('/about', function () {
-        return (new \Fruits\Controllers\PageController())->about();
-    });
+$months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
-    $r->get('/all', function () {
-        return (new \Fruits\Controllers\FruitController())->all();
-    });
-
-    $r->get('/{month:(' . implode('|', $months) . ')}', function () {
-        return (new \Fruits\Controllers\FruitController())->month();
-    });
+$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) use ($months) {
+    $r->get('/', '\Fruits\Controllers\FruitController::month');
+    $r->get('/about', '\Fruits\Controllers\PageController::about');
+    $r->get('/all', '\Fruits\Controllers\FruitController::all');
+    $r->get('/{month:' . implode('|', $months . ')}', '\Fruits\Controllers\FruitController::month');
 });
 
 // Fetch method and URI from somewhere
@@ -33,18 +30,22 @@ $uri = rawurldecode($uri);
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
+        echo 'not found'; exit;
         // ... 404 Not Found
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
+        echo 'not allowed'; exit;
         // ... 405 Method Not Allowed
         break;
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars    = $routeInfo[2];
 
-        echo $handler($vars);
+        list($class, $method) = explode('::', $handler, 2);
+        call_user_func_array([new $class, $method], $vars);
         exit;
 
         break;
 }
+

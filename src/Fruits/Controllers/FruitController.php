@@ -48,7 +48,7 @@ class FruitController extends Controller
      *
      * @return mixed
      */
-    public function month($month)
+    public function month($var = null)
     {
         $_PAGE = [
             'title'    => 'What Fruits Are In Season Now?',
@@ -75,14 +75,16 @@ class FruitController extends Controller
         //-----------------------------------------------------------------------------
         // Check if URL is for a month or a fruit
 
-        if (isset($_GET['var'])) {
-            $var = strtolower($_GET['var']);
+        if ($var === null) {
+            $var = strtolower(date('F'));
+        }
 
-            if (isset($months[$var])) {
-                $month          = $var;
-                $m              = $months[$month];
-                $_PAGE['title'] = 'What Fruits Are In Season In ' . ucwords($month) . '?';
-            }
+        $var = strtolower($var);
+
+        if (isset($months[$var])) {
+            $month          = $var;
+            $m              = $months[$month];
+            $_PAGE['title'] = 'What Fruits Are In Season In ' . ucwords($month) . '?';
         }
 
         $prev         = strtolower(date('F', mktime(0, 0, 0, $m - 1, 1)));
