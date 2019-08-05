@@ -1,5 +1,6 @@
 /.idea/
 /node_modules/
 /vendor/
+.sass-cache
 .env
 mix-manifest.json
