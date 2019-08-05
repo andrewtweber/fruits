@@ -60,6 +60,8 @@ abstract class Controller
      */
     public function error($path)
     {
+        http_response_code(404);
+
         return $this->view('error');
     }
 }
