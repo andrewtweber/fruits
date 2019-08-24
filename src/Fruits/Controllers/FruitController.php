@@ -117,6 +117,7 @@ class FruitController extends Controller
         $_PAGE['description'] = 'What fruits are in season in ' . ucwords($month) . '? ' . ucfirst(implode(', ',
                 $fruit_names));
 
+        
         return $this->view('index')
             ->with('_PAGE', $_PAGE)
             ->with('month', $month)

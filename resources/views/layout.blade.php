@@ -20,14 +20,14 @@
     <meta property="og:site_name" content="{{  getenv('SITE_NAME') }}" />
     <meta property="og:url" content="http://{{ getenv('DOMAIN') . '/' . ($_PAGE['url'] ?? '') }}" />
     <meta property="og:type" content="article" />
-    @foreach ($_PAGE['og_image'] ?? [] as $og_image)
+    @foreach (($_PAGE['og_image'] ?? []) as $og_image)
     <meta property="og:image" content="{{ $og_image }}" />
     @endforeach
     <meta property="og:description" content="{{ $_PAGE['description'] ?? '' }}" />
     <meta property="fb:admins" content="5611183" />
 
     @endif
-    <link rel="stylesheet" type="text/css" href="/css/style.css?v={{ $versions['css'] }}">
+    <link rel="stylesheet" type="text/css" href="/css/style.css?v={{ $versions['css'] ?? 1 }}">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>

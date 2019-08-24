@@ -2,9 +2,9 @@
 
 @section('content')
 
-    @if ($_PAGE['id'] != 'all')
+    @if (! isset($_PAGE['id']) || $_PAGE['id'] != 'all')
         <nav>
-            <a href="/{{ $prev }}">&lsaquo; {{ substr(ucwords($prev), 0, 3) }}<span>{{ substr($prev, 3) }}</span></a>
+			<a href="/{{ $prev }}">&lsaquo; {{ substr(ucwords($prev), 0, 3) }}<span>{{ substr($prev, 3) }}</span></a>
             <a href="/all">All<span> Fruits</span></a>
             <a href="/{{ $next }}">{{  substr(ucwords($next), 0, 3) }}<span>{{ substr($next, 3) }}</span> &rsaquo;</a>
 

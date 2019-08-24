@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-
 require_once(__DIR__ . '/../vendor/autoload.php');
 
 $dotenv = new Dotenv\Dotenv(__DIR__ . '/../');
@@ -15,6 +13,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->get('/about', '\Fruits\Controllers\PageController::about');
     $r->get('/all', '\Fruits\Controllers\FruitController::all');
     $r->get('/{month:' . implode('|', $months) . '}', '\Fruits\Controllers\FruitController::month');
+    $r->get('/{fruit:.*}', '\Fruits\Controllers\FruitController::show');
 });
 
 // Fetch method and URI from somewhere
@@ -43,7 +42,7 @@ switch ($routeInfo[0]) {
         $vars    = $routeInfo[2];
 
         list($class, $method) = explode('::', $handler, 2);
-        call_user_func_array([new $class, $method], $vars);
+        echo call_user_func_array([new $class, $method], $vars);
 
         break;
 }
