@@ -12,8 +12,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->get('/', '\Fruits\Controllers\FruitController::month');
     $r->get('/about', '\Fruits\Controllers\PageController::about');
     $r->get('/all', '\Fruits\Controllers\FruitController::all');
-    $r->get('/{month:' . implode('|', $months) . '}', '\Fruits\Controllers\FruitController::month');
-    $r->get('/{fruit:.*}', '\Fruits\Controllers\FruitController::show');
+    $r->get('/{var:' . implode('|', $months) . '}', '\Fruits\Controllers\FruitController::month');
+    $r->get('/{name:.*}', '\Fruits\Controllers\FruitController::show');
 });
 
 // Fetch method and URI from somewhere
