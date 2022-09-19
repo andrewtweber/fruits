@@ -2,7 +2,9 @@
 
 What Fruits are in Season?
 
-Code behind http://whatfruitsareinseason.com/
+Code behind https://fruits.andrew.cool/
+
+(previously whatfruitsareinseason.com)
 
 Old project with some modern updates (composer packages, SASS)
 
