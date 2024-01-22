@@ -1,0 +1,33 @@
+#!/bin/bash
+
+Help()
+{
+  echo "Deploy production changes."
+  echo
+  echo "Syntax: ./deploy [-f|h|m]"
+  echo "options:"
+  echo "f     Deploy front end."
+  echo "h     Print this help."
+  echo
+}
+
+FRONTEND=0
+
+while getopts ":fh" option; do
+  case $option in
+    f) FRONTEND=1
+       ;;
+    h) Help
+       exit;;
+    \?) echo "Error: Invalid option";
+       exit;;
+  esac
+done
+
+if [ $FRONTEND = 1 ]; then
+  yarn install
+  yarn run production
+else
+  rm -f storage/cache/*
+  composer install --no-dev --classmap-authoritative
+fi
