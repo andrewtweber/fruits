@@ -1,4 +1,6 @@
-<?php namespace Fruits;
+<?php
+
+namespace Fruits;
 
 use mysqli;
 
@@ -12,41 +14,26 @@ use mysqli;
  */
 class Connection extends mysqli
 {
-    /**
-     * @var mysqli
-     */
-    protected $connection = null;
+    protected bool $connection = false;
+
+    protected string $host;
+
+    protected string $user;
+
+    protected ?string $password;
+
+    protected string $database;
 
     /**
-     * @var string
-     */
-    protected $host;
-
-    /**
-     * @var string
-     */
-    protected $user;
-
-    /**
-     * @var string
-     */
-    protected $password;
-
-    /**
-     * @var string
-     */
-    protected $database;
-
-    /**
-     * @param  string $host
-     * @param  string $user
-     * @param  string $password
-     * @param  string $database
+     * @param string  $host
+     * @param string  $user
+     * @param ?string $password
+     * @param string  $database
      */
     public function __construct($host, $user, $password, $database)
     {
-        $this->host     = $host;
-        $this->user     = $user;
+        $this->host = $host;
+        $this->user = $user;
         $this->password = $password;
         $this->database = $database;
     }
@@ -56,13 +43,15 @@ class Connection extends mysqli
      */
     public function quickConnect()
     {
-        if ($this->connection === null) {
-            $this->connection = true;
-            parent::__construct($this->host, $this->user, $this->password, $this->database);
+        if ($this->connection) {
+            return;
+        }
 
-            if (defined('DEBUG')) {
-                echo "Connection created";
-            }
+        $this->connection = true;
+        parent::__construct($this->host, $this->user, $this->password, $this->database);
+
+        if (defined('DEBUG')) {
+            echo "Connection created";
         }
     }
 }

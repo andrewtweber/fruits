@@ -1,4 +1,6 @@
-<?php namespace Fruits;
+<?php
+
+namespace Fruits;
 
 /**
  * This class wraps around mysqli so that it can catch all methods
@@ -6,6 +8,9 @@
  * for certain methods
  *
  * @author andrew
+ *
+ * @method \mysqli_stmt|false prepare(string $query)
+ * @method ?\mysqli_result query(string $query, int $result_mode = MYSQLI_STORE_RESULT)
  */
 class Wrapper
 {

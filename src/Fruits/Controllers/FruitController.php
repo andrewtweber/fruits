@@ -117,7 +117,7 @@ class FruitController extends Controller
         $_PAGE['description'] = 'What fruits are in season in ' . ucwords($month) . '? ' . ucfirst(implode(', ',
                 $fruit_names));
 
-        
+
         return $this->view('index')
             ->with('_PAGE', $_PAGE)
             ->with('month', $month)
@@ -154,8 +154,8 @@ class FruitController extends Controller
                 $_PAGE['url']      = $fruit['url'];
                 $_PAGE['og_image'] = 'http://' . getenv('DOMAIN') . '/images/fruits/' . $fruit['url'] . '.jpg';
 
-                $fruit['start_time'] = mktime(0, 0, 0, $fruit['start_month'], 1);
-                $fruit['end_time']   = mktime(0, 0, 0, $fruit['end_month'], 1);
+                $fruit['start_time'] = mktime(0, 0, 0, (int)$fruit['start_month'], 1);
+                $fruit['end_time']   = mktime(0, 0, 0, (int)$fruit['end_month'], 1);
 
                 if ($fruit['start_month'] == 1 && $fruit['end_month'] == 12) {
                     $fruit['description'] = 'All Year';
