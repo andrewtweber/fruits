@@ -7,14 +7,22 @@
     "watch-poll": "mix watch -- --watch-options-poll=1000",
     "hot": "mix watch --hot",
     "prod": "npm run production",
-    "production": "mix --production"
+    "production": "mix --production",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "cross-env": "^5.1",
+    "husky": "^8.0.0",
     "laravel-mix": "^6.0.6",
     "postcss": "^8.1",
     "resolve-url-loader": "2.3.1",
     "sass": "^1.32.8",
     "sass-loader": "10.*"
+  },
+  "dependencies": {
+    "prettier": "^3.2.4"
+  },
+  "lint-staged": {
+    "resources/**/*": "prettier --write --ignore-unknown"
   }
 }
