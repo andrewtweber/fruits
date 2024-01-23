@@ -1,5 +1,7 @@
 # fruits
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/andrewtweber/fruits/tree/master.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/andrewtweber/fruits/tree/master)
+
 What Fruits are in Season?
 
 Code behind https://fruits.andrew.cool/
