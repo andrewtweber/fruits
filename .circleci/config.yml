@@ -1,0 +1,38 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2.1
+jobs:
+  test_backend:
+    docker:
+      # Specify the version you desire here
+      - image: cimg/php:8.3
+
+    steps:
+      - checkout
+      - run:
+          name: Install PHP extensions
+          command: |
+            sudo docker-php-ext-install mysqli
+
+      # Download and cache dependencies
+
+      # composer cache
+      - restore_cache:
+          keys:
+            # "composer.json" can be used if "composer.lock"
+            # is not committed to the repository.
+            - composer-v2-{{ checksum "composer.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - composer-v2-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          key: composer-v2-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+
+workflows:
+  backend-workflow:
+    jobs:
+      - test_backend
