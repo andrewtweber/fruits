@@ -3,36 +3,93 @@
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
 version: 2.1
+
+references:
+  workspace_root: &workspace_root
+    /home/circleci
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
 jobs:
-  test_backend:
+  build_backend:
     docker:
       # Specify the version you desire here
       - image: cimg/php:8.3
-
     steps:
       - checkout
       - run:
           name: Install PHP extensions
           command: |
             sudo docker-php-ext-install mysqli
-
-      # Download and cache dependencies
-
-      # composer cache
       - restore_cache:
           keys:
-            # "composer.json" can be used if "composer.lock"
-            # is not committed to the repository.
             - composer-v2-{{ checksum "composer.lock" }}
             # fallback to using the latest cache if no exact match is found
             - composer-v2-
-      - run: composer install -n --prefer-dist
+      - run: cp .env.testing .env
+      - run:
+          name: Install composer packages
+          command: |
+            composer install -n --prefer-dist  --classmap-authoritative
       - save_cache:
           key: composer-v2-{{ checksum "composer.lock" }}
           paths:
             - vendor
 
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - project
+
+  inspect_backend:
+    docker:
+      - image: cimg/php:8.3
+    steps:
+      - *attach_workspace
+      - run:
+          name: PHP Static Analysis
+          command: ./vendor/bin/phpstan
+      # - run:
+      #     name: Psalm
+      #     command: ./vendor/bin/psalm
+
+  build_frontend:
+    docker:
+      - image: cimg/node:20.11.0
+    steps:
+      - *attach_workspace
+      - checkout
+      - run:
+          name: Install frontend dependencies
+          command: yarn install
+      - run:
+          name: Build frontend
+          command: yarn run production
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - project
+
+  inspect_frontend:
+    docker:
+      - image: cimg/node:20.11.0
+    steps:
+      - *attach_workspace
+      - run:
+          name: Inspect frontend
+          command: npx prettier -c resources/
+
 workflows:
   backend-workflow:
     jobs:
-      - test_backend
+      - build_backend
+      - inspect_backend:
+          requires:
+            - build_backend
+  frontend-workflow:
+    jobs:
+      - build_frontend
+      - inspect_frontend:
+          requires:
+            - build_frontend
