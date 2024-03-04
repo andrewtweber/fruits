@@ -1,237 +1,237 @@
 * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 html,
 body {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 img {
-  border: 0;
+    border: 0;
 }
 .break {
-  width: 100%;
-  height: 1px;
-  margin: 0 0 -1px 0;
-  clear: both;
+    width: 100%;
+    height: 1px;
+    margin: 0 0 -1px 0;
+    clear: both;
 }
 a {
-  color: #000;
-  text-decoration: none;
+    color: #000;
+    text-decoration: none;
 }
 
 body {
-  padding: 20px 10%;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 140%;
+    padding: 20px 10%;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 140%;
 }
 header,
 #main,
 footer {
-  margin: 0 auto;
-  width: 100%;
+    margin: 0 auto;
+    width: 100%;
 }
 
 header {
-  text-align: center;
+    text-align: center;
 
-  h1 {
-    padding: 0;
-    margin: 0;
-    font-weight: normal;
-    font-size: 2.5em;
-  }
+    h1 {
+        padding: 0;
+        margin: 0;
+        font-weight: normal;
+        font-size: 2.5em;
+    }
 }
 
 nav {
-  border-bottom: 2px solid #eee;
-  margin-bottom: 10px;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 10px;
 
-  a {
-    width: 33.3333%;
-    float: left;
-    background: #fff;
-    color: #666;
-    padding: 5px 20px;
-    text-align: center;
-    white-space: nowrap;
+    a {
+        width: 33.3333%;
+        float: left;
+        background: #fff;
+        color: #666;
+        padding: 5px 20px;
+        text-align: center;
+        white-space: nowrap;
 
-    &:hover {
-      background: #eee;
-      color: #333;
+        &:hover {
+            background: #eee;
+            color: #333;
+        }
     }
-  }
 }
 
 #main {
-  border-top: 2px solid #eee;
-  border-bottom: 2px solid #eee;
-  margin: 20px auto;
-  padding: 0 0 10px;
+    border-top: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+    margin: 20px auto;
+    padding: 0 0 10px;
 }
 
 .fruit {
-  width: 23%;
-  margin: 10px 1%;
-  float: left;
-  text-align: center;
-  padding: 10px;
-
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-  &.lone {
-    width: 48%;
-  }
-  &.small {
-    width: 88%;
-    margin: 0 6%;
-    text-align: left;
-    padding: 2px;
+    width: 23%;
+    margin: 10px 1%;
+    float: left;
+    text-align: center;
+    padding: 10px;
 
     img {
-      width: 32px;
-      height: 32px;
-      float: left;
+        max-width: 100%;
+        height: auto;
     }
-    span {
-      display: block;
-      padding: 3px 0 0 12px;
-      float: left;
+    &.lone {
+        width: 48%;
     }
-  }
+    &.small {
+        width: 88%;
+        margin: 0 6%;
+        text-align: left;
+        padding: 2px;
+
+        img {
+            width: 32px;
+            height: 32px;
+            float: left;
+        }
+        span {
+            display: block;
+            padding: 3px 0 0 12px;
+            float: left;
+        }
+    }
 }
 .months {
-  width: 48%;
-  margin: 10px 1%;
-  float: left;
-  text-align: left;
-  padding: 60px 10px 0;
-  font-size: 2em;
+    width: 48%;
+    margin: 10px 1%;
+    float: left;
+    text-align: left;
+    padding: 60px 10px 0;
+    font-size: 2em;
 }
 
 p {
-  margin: 1em 0;
-  padding: 0 10px;
+    margin: 1em 0;
+    padding: 0 10px;
 
-  a {
-    color: #c00;
-    border-bottom: 1px dotted #c00;
+    a {
+        color: #c00;
+        border-bottom: 1px dotted #c00;
 
-    &:hover {
-      color: #f00;
-      border-color: #f00;
+        &:hover {
+            color: #f00;
+            border-color: #f00;
+        }
     }
-  }
-  &#suggest {
-    font-size: 0.5em;
-    color: #999;
-  }
+    &#suggest {
+        font-size: 0.5em;
+        color: #999;
+    }
 }
 .list {
-  margin: 1em 0;
-  padding: 0 30px;
-  font-family: "Lucida Grande", Arial, sans-serif;
-  font-size: 0.8em;
-  color: #999;
+    margin: 1em 0;
+    padding: 0 30px;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+    font-size: 0.8em;
+    color: #999;
 
-  -moz-column-count: 3;
-  -webkit-column-count: 3;
-  column-count: 3;
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 3;
 }
 
 footer {
-  text-align: center;
-  color: #888;
-
-  a {
+    text-align: center;
     color: #888;
-    margin: 0 15px;
-  }
 
-  #add {
-    margin: 10px 0 0;
-    color: #bbb;
-
-    img {
-      margin-top: 10px;
+    a {
+        color: #888;
+        margin: 0 15px;
     }
-  }
+
+    #add {
+        margin: 10px 0 0;
+        color: #bbb;
+
+        img {
+            margin-top: 10px;
+        }
+    }
 }
 
 @media all and (max-width: 800px) {
-  body {
-    font-size: 120%;
-  }
-  .list {
-    -moz-column-count: 2;
-    -webkit-column-count: 2;
-    column-count: 2;
-  }
-  p#suggest {
-    font-size: 0.75em;
-  }
+    body {
+        font-size: 120%;
+    }
+    .list {
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+        column-count: 2;
+    }
+    p#suggest {
+        font-size: 0.75em;
+    }
 }
 
 @media all and (max-width: 600px) {
-  header {
-    h1 {
-      font-size: 2em;
+    header {
+        h1 {
+            font-size: 2em;
+        }
     }
-  }
-  .fruit {
-    width: 48%;
-    margin: 5px 1%;
-    padding: 5px;
+    .fruit {
+        width: 48%;
+        margin: 5px 1%;
+        padding: 5px;
 
-    &.small {
-      span {
-        padding-top: 6px;
-      }
+        &.small {
+            span {
+                padding-top: 6px;
+            }
+        }
     }
-  }
-  .months {
-    padding-top: 30px;
-    font-size: 1.5em;
-  }
-  .list {
-    -moz-column-count: auto;
-    -webkit-column-count: auto;
-    column-count: auto;
-  }
+    .months {
+        padding-top: 30px;
+        font-size: 1.5em;
+    }
+    .list {
+        -moz-column-count: auto;
+        -webkit-column-count: auto;
+        column-count: auto;
+    }
 }
 
 @media all and (max-width: 480px) {
-  body {
-    padding: 10px 0;
-    font-size: 100%;
-  }
-  header {
-    padding: 0 10px;
-  }
-  nav {
-    margin-bottom: 5px;
+    body {
+        padding: 10px 0;
+        font-size: 100%;
+    }
+    header {
+        padding: 0 10px;
+    }
+    nav {
+        margin-bottom: 5px;
 
-    a {
-      padding: 5px 10px;
+        a {
+            padding: 5px 10px;
+        }
+        span {
+            display: none;
+        }
     }
-    span {
-      display: none;
+    #main {
+        margin: 10px auto;
+        padding: 0 0 5px;
     }
-  }
-  #main {
-    margin: 10px auto;
-    padding: 0 0 5px;
-  }
-  footer {
-    a {
-      margin: 0 8px;
+    footer {
+        a {
+            margin: 0 8px;
+        }
+        span {
+            display: none;
+        }
     }
-    span {
-      display: none;
-    }
-  }
 }
