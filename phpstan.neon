@@ -1,4 +1,8 @@
 parameters:
     level: 5
+    parallel:
+        jobSize: 20
+        maximumNumberOfProcesses: 8
+        minimumNumberOfJobsPerProcess: 4
     paths:
         - src
