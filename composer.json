@@ -3,7 +3,7 @@
     "description": "Helps you shop for fruits at the grocery store",
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "ext-mysqli": "*",
         "vlucas/phpdotenv": "^2.0",
         "nikic/fast-route": "^1.3",
