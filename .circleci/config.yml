@@ -53,7 +53,7 @@ jobs:
 
   build_frontend:
     docker:
-      - image: cimg/node:20.11.0
+      - image: cimg/node:22.17
     steps:
       - *attach_workspace
       - checkout
@@ -70,7 +70,7 @@ jobs:
 
   inspect_frontend:
     docker:
-      - image: cimg/node:20.11.0
+      - image: cimg/node:22.17
     steps:
       - *attach_workspace
       - run:
