@@ -3,4 +3,3 @@
 /vendor/
 .sass-cache
 .env
-mix-manifest.json
