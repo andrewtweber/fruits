@@ -11,7 +11,7 @@
   "devDependencies": {
     "husky": "^8.0.0",
     "sass": "^1.77.0",
-    "vite": "^7.0.0"
+    "vite": "^7.3.7"
   },
   "dependencies": {
     "prettier": "^3.2.4"
